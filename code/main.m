@@ -5,7 +5,7 @@ function main()
     uipanel(fig, 'position', [235 15 210 175]);
     processCZI = uibutton(fig, 'push', 'position', [20 20 200 20], 'Text', 'Process New CZIs');
     launchFromMAT = uibutton(fig, 'push', 'position', [240 20 200 20], 'Text', 'Launch Visualization from MATs');
-    registerCheck = uicheckbox(fig, 'position', [30 150 200 20], 'Text', 'Register Green Series', 'Value', 1);
+    erCheck = uicheckbox(fig, 'position', [30 150 200 20], 'Text', 'er Green Series', 'Value', 1);
     eventCheck = uicheckbox(fig, 'position', [30 120 200 20], 'Text', 'Identify Events', 'Value', 1);
     logCheck = uicheckbox(fig, 'position', [30 90 200 20], 'Text', 'Display Log Transform', 'Value', 1);
     saveCheck = uicheckbox(fig, 'position', [30 60 200 20], 'Text', 'Save all data as MATs', 'Value', 1);
@@ -91,7 +91,7 @@ function startProcess(~, ~, fig, registerCheck, eventCheck, logCheck, saveCheck)
             waitbar(barCount/barTotal, bar, 'Registering Green (This might take a while)', 'Name', 'Processing CZI Data');
         catch
         end
-        series1 = registerGreen2(greenFile, fullfile(outputPath, 'TIFF' , [name '.tiff']), x, y, t, im, saveCheck.Value, saveCheck.Value, true, outputPath);
+        series1 = registerGreen(greenFile, fullfile(outputPath, 'TIFF' , [name '.tiff']), x, y, t, im, saveCheck.Value, saveCheck.Value, true, outputPath);
     end
     barCount = barCount+1;
     waitbar(barCount/barTotal, bar, 'Extracting Traces', 'Name', 'Processing CZI Data');
