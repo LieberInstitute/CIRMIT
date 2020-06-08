@@ -4,7 +4,7 @@ library(R.matlab)
 library(ggplot2)
 library(dplyr)
 library(reshape2)
-#devtools::install_github("martakarass/adept")
+devtools::install_github("martakarass/adept")
 library(adept)
 library(stringi)
 
@@ -12,6 +12,7 @@ print("check0")
 args <- commandArgs(trailingOnly=TRUE)
 file <- args[1]
 outputPath <- args[2]
+x.fs <- args[3] %>% as.numeric()
 
 
 ## Function to read Matlab data and convert to ready-to-use data.frame
@@ -34,7 +35,7 @@ get.df <- function(file.id){
 get.df2 <- function(file.path.i){
   #traces      <- readMat(file.path.i)
   if (grepl('smoothTraces', file.path.i)) {
-    mat <- readMat(file.path.i)
+    mat <- readMat(file.path.i)$smoothTraces
   } else {
     mat <- readMat(file.path.i)$traces
   }
@@ -53,18 +54,18 @@ print("check1")
 ## -----------------------------------------------------------------------------
 ## ADEPT SEGMENTATION
 
-load("/users/jcatalli/code_pipeline/spikes.Rdata")
-load("/users/jcatalli/code_pipeline/spike_df.Rdata")
+load("../R/spikes.Rdata")
+load("../R/spike_df.Rdata")
 ## Params
 pattern.dur.seq      <- seq(5, 30, by = 1/4)   ## Pattern assumed between 5 to 30 seconds
 similarity.measure   <- "cor"
 compute.template.idx <- TRUE
 template             <- tmpl.out
 # template <- lapply(tmpl.out, function(tmpl) -tmpl)
-x.fs                 <- 4
+#x.fs                 <- 4
 x.cut                <- FALSE
 
-sim_i.post.thresh    <- 0.7
+#sim_i.post.thresh    <- 0.7
 
 
 
@@ -73,7 +74,7 @@ sim_i.post.thresh    <- 0.7
 
 
 try({
-dat1 <- get.df2(file)
+dat1 <- get.df2(file.path(outputPath, file))
 
 for (j in 1:(ncol(dat1)-1)) {
 ## TR1
@@ -93,7 +94,7 @@ out.dat1.tr1 <-
 Sys.time() - t1 # Time difference of 32.72379 secs
 out.dat1.tr1.F <-
   out.dat1.tr1 %>%
-  filter(sim_i > sim_i.post.thresh) %>%
+  #filter(sim_i > sim_i.post.thresh) %>%
   left_join(tmpl.par.df, by = "template_i")
 if (nrow(out.dat1.tr1.F) > 0) {
 rng <- rep(NA, nrow(out.dat1.tr1.F))
@@ -105,14 +106,17 @@ rng[k] <- range(dat1[t1:t2,j])[2]-range(dat1[t1:t2,j])[1]
 out.dat1.tr1.F$rng <- rng
 out.dat1.tr1.F$SD <- sd(dat1[,j])
 }
+if (grepl('smoothTraces', file)) {
+  fname <- stri_replace(file, replacement='', fixed="smoothTraces.mat")
+} else {
+  fname <- stri_replace(file, replacement='', fixed="traces.mat")
+}
 
-fname <- paste0(stri_sub(file.list[i],1,nchar(file.list[i])-4), '_adept_trace', j, '.csv')
+fname <- paste0(fname, 'adept_trace', j, '.csv')
+fname <- basename(fname)
+file.path(outputPath, fname)
 write.csv(out.dat1.tr1.F, file=file.path(outputPath, fname))
-#png(paste0(stri_sub(file.list[i],1,nchar(file.list[i])-4), '_adept_trace', j, '.png'), type="cairo")
-#plot(dat1[,j], type = "l")
-#abline(v = (out.dat1.tr1.F$tau_i + out.dat1.tr1.F$T_i -1), col = "pink")
-#abline(v = out.dat1.tr1.F$tau_i, col = "red", lty=2)
-#dev.off()
+
 
 }
 })

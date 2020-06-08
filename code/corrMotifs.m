@@ -1,4 +1,4 @@
-function [dff1, Ca] = corrMotifs(smoothTraces, greenFile, spikesFile, height, fps, saveCorr, outputPath)
+function [dff1, Ca] = corrMotifs(smoothTraces, greenFile, spikesFile, height, dynamicHeight, fps, saveCorr, outputPath)
 
 
     dff = smoothTraces';
@@ -16,6 +16,11 @@ function [dff1, Ca] = corrMotifs(smoothTraces, greenFile, spikesFile, height, fp
        x = interp1(1:T,x,1:fps/10:T);
        dff1(ii,:) = x;
        SD(ii) = std(x);
+       if dynamicHeight
+           h = height*SD(ii);
+       else
+           h = height;
+       end
        parfor i=1:length(spikes)
            snippet = spikes{i};
            L = length(snippet);
@@ -23,7 +28,7 @@ function [dff1, Ca] = corrMotifs(smoothTraces, greenFile, spikesFile, height, fp
            rng = zeros(size(x));
            for j=1:length(x)-(L-1)
                x_snippet = x(j:j+L-1);
-               if(range(x_snippet)>height)
+               if(range(x_snippet)>h)
                    rng(j) = range(x_snippet);
                    R = corrcoef(x_snippet,snippet);
                    C(j) = R(1,2);

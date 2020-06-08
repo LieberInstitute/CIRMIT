@@ -10,10 +10,10 @@ function main()
     threshLab = uilabel(fig, 'position', [325 560 100 20], 'Text', 'SD Threshold');
     sdThresh = uieditfield(fig, 'numeric', 'position', [405 560 30 20],...
         'Value', 5, 'Limits', [0 Inf], 'LowerLimitInclusive', 'off');
-    refineLab = uilabel(fig, 'position', [25 530 150 20], 'Text', 'Select refinement method');
+    refineText = uilabel(fig, 'position', [25 530 150 20], 'Text', 'Select refinement method');
     refineMethod = uidropdown(fig, 'position', [195 530 125 20], 'Items',...
         {'Eccentricity', 'Circle finding'}, 'Value', 'Eccentricity');
-    threshMethod.ValueChangedFcn = {@changeThreshMethod, refineMethod, sdThresh, threshLab, refineLab};
+    threshMethod.ValueChangedFcn = {@changeThreshMethod, refineMethod, sdThresh, threshLab, refineText};
     uipanel(fig, 'position', [20 465 425 50], 'Title', 'Registration');
     registerCheck = uicheckbox(fig, 'position', [30 470 200 20], 'Text', 'Register Green Series', 'Value', 1);
     uipanel(fig, 'position', [20 370 425 90], 'Title', 'Trace extraction');
@@ -26,18 +26,17 @@ function main()
     traceStat.ValueChangedFcn = {@changeTraceStat, quantBox};
     uipanel(fig, 'position', [20 225 425 140], 'Title', 'Event Detection');
     eventCheck = uicheckbox(fig, 'position', [25 320 200 20], 'Text', 'Identify Events', 'Value', 1);
-    eventLab = uilabel(fig, 'position', [25 295 170 20], 'Text', 'Select event detection method');
+    uilabel(fig, 'position', [25 295 170 20], 'Text', 'Select event detection method');
     eventMethod = uidropdown(fig, 'position', [195 295 125 20], 'Items',...
         {'Motif correlation', 'ADEPT'}, 'Value', 'Motif correlation');
-    ctLab = uilabel(fig, 'position', [25 265 170 20], 'Text', 'Correlation threshold');
+    uilabel(fig, 'position', [25 265 170 20], 'Text', 'Correlation threshold');
     ctBox = uieditfield(fig, 'numeric', 'position', [200 265 100 20],...
         'Value', 0.9, 'Limits', [0 1]);
-    htLab = uilabel(fig, 'position', [25 235 170 20], 'Text', 'Height threshold');
+    uilabel(fig, 'position', [25 235 170 20], 'Text', 'Height threshold');
     htBox = uieditfield(fig, 'numeric', 'position', [200 235 100 20],...
         'Value', 0.2, 'Limits', [0 Inf]);
     dynamicCheck = uicheckbox(fig, 'position', [305 235 150 20], 'Text', 'Dynamic (times SD)', 'Value', 0);
-    eventCheck.ValueChangedFcn = {@toggleEvents, eventMethod, ctBox, htBox, dynamicCheck,...
-        eventLab, ctLab, htLab};
+    eventCheck.ValueChangedFcn = {@toggleEvents, eventMethod, ctBox, htBox, dynamicCheck};
     uipanel(fig, 'position', [20 170 425 50], 'Title', 'Other Options');
     logCheck = uicheckbox(fig, 'position', [25 175 200 20], 'Text', 'Display Log Transform', 'Value', 1);
     saveCheck = uicheckbox(fig, 'position', [250 175 200 20], 'Text', 'Save all data as MATs', 'Value', 1);
@@ -64,7 +63,7 @@ function changeThreshMethod(threshMethod, ~, refineMethod, sdThresh, threshLab, 
         set(refineMethod, 'Enable', 'on');
         set(sdThresh, 'Enable', 'on');
         set(threshLab, 'Enable', 'on');
-        set(refineLab, 'Enable', 'on');
+        set(refineLab, 'Enable', 'off');
     end
 
 end
@@ -79,24 +78,18 @@ function changeTraceStat(traceStat, ~, quantBox)
 
 end
 
-function toggleEvents(eventCheck, ~, eventMethod, ctBox, htBox, dynamicCheck, eventLab, ctLab, htLab)
+function toggleEvents(eventCheck, ~, eventMethod, ctBox, htBox, dynamicCheck)
 
     if eventCheck.Value
         set(eventMethod, 'Enable', 'on');
         set(ctBox, 'Enable', 'on');
         set(htBox, 'Enable', 'on');
         set(dynamicCheck, 'Enable', 'on');
-        set(eventLab, 'Enable', 'on');
-        set(ctLab, 'Enable', 'on');
-        set(htLab, 'Enable', 'on');
     else
         set(eventMethod, 'Enable', 'off');
         set(ctBox, 'Enable', 'off');
         set(htBox, 'Enable', 'off');
         set(dynamicCheck, 'Enable', 'off');
-        set(eventLab, 'Enable', 'off');
-        set(ctLab, 'Enable', 'off');
-        set(htLab, 'Enable', 'off');
     end
 
 end

@@ -1,7 +1,7 @@
 function [mask, ROI_info] = segmentRed(redFile, im, method, sdThresh, circles, MetaData, saveMask, outputPath)
 
     pixelThresh = ceil(20/(MetaData.ScaleX*MetaData.ScaleY));
-    if strcmp(method, 'MedianTransform')
+    if strcmp(method, 'Median transform')
         im = double(im);
         imT = (im-median(im(:)))/std2(im);
         mask1 = imT>sdThresh;
@@ -35,7 +35,7 @@ function [mask, ROI_info] = segmentRed(redFile, im, method, sdThresh, circles, M
             end
             save(fullfile(outputPath, [name '_mask.mat']), 'mask', 'ROI_info', '-v6');
         end
-    elseif strcmp(method, 'RegionGrow')
+    elseif strcmp(method, 'Region growing')
         imgcherry = double(im);
         imgcherry = imhmin(imgcherry,2*std2(imgcherry));
         thresh = [num2str(sdThresh) '*std2(imgcherry)'];
@@ -95,6 +95,9 @@ function [mask, ROI_info] = segmentRed(redFile, im, method, sdThresh, circles, M
         threshDown.Callback = {@threshDownFcn, threshUp, threshDialog};
         threshUp.Callback = {@threshUpFcn, threshDown, threshDialog};
         saveButton.Callback = {@saveManual, f, redFile, saveMask, outputPath, fig};
+        uiwait(fig);
+        [~, name, ~] = fileparts(redFile);
+        load(fullfile(outputPath, [name '_mask.mat']));
     else
         error('Please choose a valid segmentation method: "MedianTransform" or "RegionGrow"');
     end

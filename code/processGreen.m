@@ -1,8 +1,6 @@
 function [series, x, y, t, MetaData] = processGreen(greenFile, saveMetaData, saveSeries, outputPath, writeTiff)
 
-    addpath toolbox
-    addpath toolbox/bfmatlab
-    
+    %addpath(genpath('toolbox'))
     out = ReadImage6D(greenFile);
     
     im6d = out{1};

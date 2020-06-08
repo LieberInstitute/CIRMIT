@@ -1,14 +1,14 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1250295844" file="G:\CIRMIT\CIRMIT.prj" location="G:\CIRMIT" name="CIRMIT" preferred-package-location="C:\Users\Joe\Documents\CIRMIT\CIRMIT\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="1250295844" file="G:\GitRepos\CIRMIT\code\CIRMIT.prj" location="G:\GitRepos\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\media\joecat\storage\GitRepos\CIRMIT\code\C:\Users\Joe\Documents\CIRMIT\CIRMIT\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>CIRMIT</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
+    <param.version>3.0</param.version>
     <param.authnamewatermark>Joseph Catallini</param.authnamewatermark>
     <param.email>j.l.cat.6@gmail.com</param.email>
     <param.company>LIBD</param.company>
     <param.summary>Calcium Imaging Real-Time MATLAB Interactive Toolbox</param.summary>
-    <param.description>Processes CZI data from Calcium Imaging and produces a visualization tool.</param.description>
+    <param.description>Processes calcium imaging data and produces a visualization tool.</param.description>
     <param.screenshot>${PROJECT_ROOT}\cirmit_splash.png</param.screenshot>
     <param.guid />
     <param.installpath.string>\LIBD\CIRMIT\</param.installpath.string>
@@ -79,20 +79,22 @@
       <file>${PROJECT_ROOT}\makeAnimation.m</file>
       <file>${PROJECT_ROOT}\processGreen.m</file>
       <file>${PROJECT_ROOT}\processRed.m</file>
-      <file>${PROJECT_ROOT}\registerGreen2.m</file>
+      <file>${PROJECT_ROOT}\registerGreen.m</file>
       <file>${PROJECT_ROOT}\segmentRed.m</file>
       <file>${PROJECT_ROOT}\toolbox</file>
       <file>${PROJECT_ROOT}\traceExtraction.m</file>
+      <file>G:\GitRepos\CIRMIT\R</file>
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
       <file>${PROJECT_ROOT}\cellLabels.m</file>
       <file>${PROJECT_ROOT}\circlemask.m</file>
+      <file>${PROJECT_ROOT}\processAdeptOutput.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="splash.png" optional="false">G:\CIRMIT\CIRMIT\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="CIRMIT.exe" optional="false">G:\CIRMIT\CIRMIT\for_testing\CIRMIT.exe</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">G:\CIRMIT\CIRMIT\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="CIRMIT.exe" optional="false">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\CIRMIT.exe</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="splash.png" optional="false">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>

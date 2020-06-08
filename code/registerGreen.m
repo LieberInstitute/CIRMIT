@@ -1,4 +1,4 @@
-function regSeries = registerGreen2(greenFile, tiffFile, x, y, t, im, saveTranslationMatrices, saveRegistered, writeTiff, outputPath)
+function regSeries = registerGreen(greenFile, tiffFile, x, y, t, im, saveTranslationMatrices, saveRegistered, writeTiff, outputPath)
 
     [optimizer, metric] = imregconfig('monomodal');
     regcorr = zeros(3,3,t);

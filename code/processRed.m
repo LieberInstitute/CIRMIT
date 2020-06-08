@@ -1,7 +1,7 @@
 function [im, MetaData] = processRed(redFile, saveMetaData, saveImage, outputPath)
 
-    addpath toolbox
-    addpath toolbox/bfmatlab
+    %addpath toolbox
+    %addpath toolbox/bfmatlab
     
     out = ReadImage6D(redFile);
     

@@ -65,7 +65,7 @@ function p = createSubplots(smoothTraces, im, mask, series, seriesCell, events, 
         l = plot((0:timePts-1)/fps, smoothTraces(:,jj), '-b', 'ButtonDownFcn', {@clickPlot, smoothTraces, im, mask, series, seriesCell, events, roiArray, corrs, t, jumpDialog, greenFile, fps, r, c, showSeriesBox, manualCheck, p});
         ylabel(["ROI: " num2str(jj)]);
         set(l, 'tag', num2str(jj));
-        hold off; ylim([ymin ymax]);
+        hold off; ylim([ymin ymax]); xlim([-2 max((timePts-1)/fps)+2]);
         subplot('Position', imgPos); h(ii+3) = imagesc(seriesCell{jj}(:,:,t),[mn mx]); colormap gray; hold on; plot(c{jj},r{jj},'r.','MarkerSize',10); hold off; axis off;
     end
     ax1 = subplot('Position', maskPos); h(1) = imagesc(label2rgb(mask2, 'hsv', 'k'), 'ButtonDownFcn', {@clickMask, smoothTraces, im, mask, series, seriesCell, events, roiArray, corrs, t, jumpDialog, greenFile, fps, r, c, showSeriesBox, manualCheck}); axis off; cellLabels(mask);
@@ -100,7 +100,7 @@ function p = createSubplots(smoothTraces, im, mask, series, seriesCell, events, 
         set(jumpDown, 'Enable', 'on');
         set(jumpUp, 'Enable', 'on');
     end
-    recordButton.Callback = {@recordVideo, smoothTraces, series, seriesCell, roiArray, corrs, p, fps, playButton, jumpDown, jumpUp, jumpDialog, showSeriesBox, resetButton, h, manualCheck, clearButton, saveButton};
+    recordButton.Callback = {@recordVideo, smoothTraces, series, seriesCell, roiArray, corrs, p, fps, playButton, jumpDown, jumpUp, jumpDialog, showSeriesBox, resetButton, h, manualCheck, greenFile, clearButton, saveButton};
     playButton.Callback = {@playAnimation, smoothTraces, series, seriesCell, roiArray, corrs, p, t, fps, recordButton, jumpDown, jumpUp, jumpDialog, showSeriesBox, resetButton, h, manualCheck,clearButton, saveButton};
     set(showSeriesBox, 'Value', showSeries);
     showSeriesBox.Callback = {@showSeriesCheck, smoothTraces, im, mask, series, seriesCell, events, roiArray, corrs, t, jump, greenFile, fps, r, c, h, manualCheck};
@@ -163,7 +163,7 @@ function clickPlot(~, Event, smoothTraces, im, mask, series, seriesCell, events,
     end
 end
 
-function recordVideo(hButton, ~, smoothTraces, series, seriesCell, roiArray, corrs, p, fps, playButton, jumpDown, jumpUp, jumpDialog, showSeriesBox, resetButton, h, manualCheck, clearButton, saveButton)
+function recordVideo(hButton, ~, smoothTraces, series, seriesCell, roiArray, corrs, p, fps, playButton, jumpDown, jumpUp, jumpDialog, showSeriesBox, resetButton, h, manualCheck, greenFile, clearButton, saveButton)
 
     com.mathworks.mwswing.MJFileChooserPerPlatform.setUseSwingDialog(1)
     setAvi = '*.avi';
@@ -175,13 +175,20 @@ function recordVideo(hButton, ~, smoothTraces, series, seriesCell, roiArray, cor
     if ~exist(fullfile(homepath, 'CIRMIT_paths'), 'dir')
         mkdir(fullfile(homepath, 'CIRMIT_paths'));
     end
+    pathinfo = '';
     if exist(fullfile(homepath, 'CIRMIT_paths', 'CIRMIT_paths3.txt'), 'file')
         try
-            pathinfo = fileread(fullfile(homepath, 'CIRMIT_paths', 'CIRMIT_paths3.txt'));
-            setAvi = fullfile(pathinfo, '*.avi');
+            pathinfo = fileread(fullfile(homepath, 'CIRMIT_paths', 'CIRMIT_paths3.txt')); 
+            
         catch
         end
     end
+    [~, greenName, ~] = fileparts(greenFile);
+    ridx = strfind(greenName, 'registered');
+    if ridx
+        greenName = greenName(1:ridx-2);
+    end
+    setAvi = fullfile(pathinfo, [greenName '.avi']);
     [vidFile, vidPath] = uiputfile(setAvi);
     [~, ~, vidExt] = fileparts(vidFile);
     if ischar(vidPath) & strcmp(vidExt, '.avi')
