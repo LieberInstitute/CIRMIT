@@ -196,7 +196,8 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
         MetaData = get(fig, 'UserData');
         tiffFile = fullfile(greenPath, greenFile);
     end
-    fps = MetaData.FPS;     
+    fps = MetaData.FPS;
+    imDisplay = im;
     if size(im) ~= size(series1(:,:,1))
         im = imresize(im, size(series1(:,:,1)));
     end
@@ -269,6 +270,7 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
     else
         events = cell(1, max(mask(:)));
     end
+    
     if logCheck.Value
         barCount = barCount+1;
         try
@@ -276,7 +278,10 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
         catch
         end
         series1 = log(double(series1));
-        im = log(double(im));
+        imDisplay = log(double(imDisplay));
+    end
+    if size(imDisplay) ~= size(series1(:,:,1))
+        imDisplay = imresize(imDisplay, size(series1(:,:,1)));
     end
     barCount = barCount+1;
     try
@@ -286,7 +291,7 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
     [~,m]=size(smoothTraces);
     m = min([m 4]);
     delete(gcp('nocreate'));
-    [~, ~] = makeAnimation(smoothTraces, im, mask, ROI_info, series1, fullfile(greenPath, greenFile), events, 1:m, 1, fps);
+    [~, ~] = makeAnimation(smoothTraces, imDisplay, mask, ROI_info, series1, fullfile(greenPath, greenFile), events, 1:m, 1, fps);
     close(bar);
     %close(fig);
 
@@ -444,6 +449,9 @@ function loadAndLaunch(~, ~, fig, eventCheck2, logCheck2, registerCheck2, dffChe
         end
         im = log(double(im));
         series1 = log(double(series1));
+    end
+    if size(im) ~= size(series1(:,:,1))
+        im = imresize(im, size(series1(:,:,1)));
     end
     [~,m]=size(smoothTraces);
     m = min([m 4]);
