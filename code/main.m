@@ -57,7 +57,7 @@ function main()
     % Function that disables event detection settings when no event
     % detection is selected
     eventCheck.ValueChangedFcn = {@toggleEvents, ctBox, htBox, dynamicCheck,...
-        eventLab, ctLab, htLab};
+        ctLab, htLab};
     % Sub panel for other options
     uipanel(fig, 'position', [20 170 425 50], 'Title', 'Other Options');
     % Checkbox if images should be displayed by log transform
@@ -113,20 +113,18 @@ function changeTraceStat(traceStat, ~, quantBox)
 
 end
 
-function toggleEvents(eventCheck, ~, ctBox, htBox, dynamicCheck, eventLab, ctLab, htLab)
+function toggleEvents(eventCheck, ~, ctBox, htBox, dynamicCheck, ctLab, htLab)
 
     if eventCheck.Value
         set(ctBox, 'Enable', 'on');
         set(htBox, 'Enable', 'on');
         set(dynamicCheck, 'Enable', 'on');
-        set(eventLab, 'Enable', 'on');
         set(ctLab, 'Enable', 'on');
         set(htLab, 'Enable', 'on');
     else
         set(ctBox, 'Enable', 'off');
         set(htBox, 'Enable', 'off');
         set(dynamicCheck, 'Enable', 'off');
-        set(eventLab, 'Enable', 'off');
         set(ctLab, 'Enable', 'off');
         set(htLab, 'Enable', 'off');
     end
