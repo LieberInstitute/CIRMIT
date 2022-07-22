@@ -1,54 +1,88 @@
 function main()
 
+    % Create the main CIRMIT figure 
     fig = uifigure('Name', 'CIRMIT', 'position', [360 198 460 650]);
+    % Panel for processing images and extracting data
     uipanel(fig, 'position', [15 135 435 500], 'Title', 'Process images');
-    uipanel(fig, 'position', [15 10 435 116], 'Title', 'Launch from previously processed data');
+    % Sub panel for selecting ROIs from red channel
     uipanel(fig, 'position', [20 520 425 90], 'Title', 'Red channel segmentation');
+    % Field for red channel segmentation method
     uilabel(fig, 'position', [25 560 150 20], 'Text', 'Select thresholding method');
     threshMethod = uidropdown(fig, 'position', [195 560 125 20], 'Items',...
         {'Median transform', 'Region growing', 'Manual'}, 'Value', 'Median transform');
+    % Field for standard deviation based threshold for red channel
+    % segmentation
     threshLab = uilabel(fig, 'position', [325 560 100 20], 'Text', 'SD Threshold');
     sdThresh = uieditfield(fig, 'numeric', 'position', [405 560 30 20],...
         'Value', 5, 'Limits', [0 Inf], 'LowerLimitInclusive', 'off');
+    % Field to select refinement method of ROIs
     refineLab = uilabel(fig, 'position', [25 530 150 20], 'Text', 'Select refinement method');
     refineMethod = uidropdown(fig, 'position', [195 530 125 20], 'Items',...
         {'Eccentricity', 'Circle finding'}, 'Value', 'Eccentricity');
+    % Function for toggling available options when switching between
+    % manual and other methods of image segmentation
     threshMethod.ValueChangedFcn = {@changeThreshMethod, refineMethod, sdThresh, threshLab, refineLab};
+    % Sub panel for registering green series to red channel
     uipanel(fig, 'position', [20 465 425 50], 'Title', 'Registration');
+    % Checkbox indicating whether registration should be performed
     registerCheck = uicheckbox(fig, 'position', [30 470 200 20], 'Text', 'Register Green Series', 'Value', 1);
+    % Sub panel for trace statistic extraction
     uipanel(fig, 'position', [20 370 425 90], 'Title', 'Trace extraction');
+    % Field to select trace statistic 
     uilabel(fig, 'position', [25 410 150 20], 'Text', 'Select trace statistic');
     traceStat = uidropdown(fig, 'position', [195 410 125 20], 'Items',...
         {'Mean', 'Quantile'}, 'Value', 'Mean');
     quantBox = uieditfield(fig, 'numeric', 'position', [340 410 50 20],...
         'Value', 0.5, 'Limits', [0 1], 'Enable', 'Off');
+    % Checkbox to indicate whether DFF transformation should be applied
     dffCheck = uicheckbox(fig, 'position', [30 380 200 20], 'Text', 'Apply DFF Smoothing', 'Value', 1);
+    % Function that enables quantBox only when quantile trace statistic is
+    % selected
     traceStat.ValueChangedFcn = {@changeTraceStat, quantBox};
+    % Sub panel for event detection
     uipanel(fig, 'position', [20 225 425 140], 'Title', 'Event Detection');
+    % Checkbox indicating if you want to identify events
     eventCheck = uicheckbox(fig, 'position', [25 320 200 20], 'Text', 'Identify Events', 'Value', 1);
-    eventLab = uilabel(fig, 'position', [25 295 170 20], 'Text', 'Select event detection method');
-    eventMethod = uidropdown(fig, 'position', [195 295 125 20], 'Items',...
-        {'Motif correlation', 'ADEPT'}, 'Value', 'Motif correlation');
+    % Correlation threshold for event detection
     ctLab = uilabel(fig, 'position', [25 265 170 20], 'Text', 'Correlation threshold');
     ctBox = uieditfield(fig, 'numeric', 'position', [200 265 100 20],...
         'Value', 0.9, 'Limits', [0 1]);
+    % Height threshold for event detection
     htLab = uilabel(fig, 'position', [25 235 170 20], 'Text', 'Height threshold');
     htBox = uieditfield(fig, 'numeric', 'position', [200 235 100 20],...
         'Value', 0.2, 'Limits', [0 Inf]);
+    % Checkbox indicating if height threshold should be static or a
+    % multiple of each trace's standard deviation
     dynamicCheck = uicheckbox(fig, 'position', [305 235 150 20], 'Text', 'Dynamic (times SD)', 'Value', 0);
-    eventCheck.ValueChangedFcn = {@toggleEvents, eventMethod, ctBox, htBox, dynamicCheck,...
+    % Function that disables event detection settings when no event
+    % detection is selected
+    eventCheck.ValueChangedFcn = {@toggleEvents, ctBox, htBox, dynamicCheck,...
         eventLab, ctLab, htLab};
+    % Sub panel for other options
     uipanel(fig, 'position', [20 170 425 50], 'Title', 'Other Options');
+    % Checkbox if images should be displayed by log transform
     logCheck = uicheckbox(fig, 'position', [25 175 200 20], 'Text', 'Display Log Transform', 'Value', 1);
+    % Checkbox if image processing output should be saved as MAT files
     saveCheck = uicheckbox(fig, 'position', [250 175 200 20], 'Text', 'Save all data as MATs', 'Value', 1);
+    % Button to launch from processing images
     processCZI = uibutton(fig, 'push', 'position', [240 140 200 20], 'Text', 'Process New Images');
+    
+    % Panel for launching visualization tool from already processed data
+    uipanel(fig, 'position', [15 10 435 116], 'Title', 'Launch from previously processed data');
+    % Button to launch visualization
     launchFromMAT = uibutton(fig, 'push', 'position', [240 15 200 20], 'Text', 'Launch Visualization from MATs');
+    % Checkbox to indicate if events should be displayed 
     eventCheck2 = uicheckbox(fig, 'position', [25 60 200 20], 'Text', 'Display Events', 'Value', 1);
+    % Checkbox if images should be displayed by log transform
     logCheck2 = uicheckbox(fig, 'position', [25 80 200 20], 'Text', 'Display Log Transform', 'Value', 1);
+    % Checkbox if MATs to be used have been registered
     registerCheck2 = uicheckbox(fig, 'position', [25 40 200 20], 'Text', 'Images were registered', 'Value', 1);
+    % Checkbox if trace statistic MATs have had DFF transform applied
     dffCheck2 = uicheckbox(fig, 'position', [25 20 200 20], 'Text', 'DFF smoothing was applied', 'Value', 1);
+    
+    % Button functions to run
     processCZI.ButtonPushedFcn = {@startProcess, fig, threshMethod, sdThresh, refineMethod, registerCheck,...
-        traceStat, quantBox, dffCheck, eventCheck, eventMethod, ctBox, htBox, dynamicCheck, logCheck, saveCheck};
+        traceStat, quantBox, dffCheck, eventCheck, ctBox, htBox, dynamicCheck, logCheck, saveCheck};
     launchFromMAT.ButtonPushedFcn = {@loadAndLaunch, fig, eventCheck2, logCheck2, registerCheck2, dffCheck2};
 
 end
@@ -79,10 +113,9 @@ function changeTraceStat(traceStat, ~, quantBox)
 
 end
 
-function toggleEvents(eventCheck, ~, eventMethod, ctBox, htBox, dynamicCheck, eventLab, ctLab, htLab)
+function toggleEvents(eventCheck, ~, ctBox, htBox, dynamicCheck, eventLab, ctLab, htLab)
 
     if eventCheck.Value
-        set(eventMethod, 'Enable', 'on');
         set(ctBox, 'Enable', 'on');
         set(htBox, 'Enable', 'on');
         set(dynamicCheck, 'Enable', 'on');
@@ -90,7 +123,6 @@ function toggleEvents(eventCheck, ~, eventMethod, ctBox, htBox, dynamicCheck, ev
         set(ctLab, 'Enable', 'on');
         set(htLab, 'Enable', 'on');
     else
-        set(eventMethod, 'Enable', 'off');
         set(ctBox, 'Enable', 'off');
         set(htBox, 'Enable', 'off');
         set(dynamicCheck, 'Enable', 'off');
@@ -102,7 +134,7 @@ function toggleEvents(eventCheck, ~, eventMethod, ctBox, htBox, dynamicCheck, ev
 end
 
 function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerCheck,...
-        traceStat, quantBox, dffCheck, eventCheck, eventMethod, ctBox, htBox, dynamicCheck, logCheck, saveCheck)
+        traceStat, quantBox, dffCheck, eventCheck, ctBox, htBox, dynamicCheck, logCheck, saveCheck)
 
     com.mathworks.mwswing.MJFileChooserPerPlatform.setUseSwingDialog(1)
     getRed = '*.czi;*.tiff;*.tif';
@@ -237,36 +269,19 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
     end
     
     if eventCheck.Value
-        if strcmp(eventMethod.Value, 'Motif correlation')
-            barCount = barCount+1;
-            try
-                waitbar(barCount/barTotal, bar, 'Motif Correlation', 'Name', 'Processing Image Data');
-            catch
-            end
-            [dff1, Ca] = corrMotifs(smoothTraces, greenFile, 'spikes.mat', htBox.Value, dynamicCheck.Value, fps, saveCheck.Value, outputPath);
-            barCount = barCount+1;
-            try
-                waitbar(barCount/barTotal, bar, 'Event Segmentation', 'Name', 'Processing Image Data');
-            catch
-            end
-            events = findPeaks(dff1, Ca, greenFile, ctBox.Value, true, outputPath);
-        elseif strcmp(eventMethod.Value, 'ADEPT')
-            RscriptFileName = '../R/ca_adept.R';
-            commandline=['"Rscript" "' RscriptFileName '" "' fname '" "' outputPath '" "' num2str(fps) '"'];
-            barCount = barCount+1;
-            try
-                waitbar(barCount/barTotal, bar, 'Running ADEPT', 'Name', 'Processing Image Data');
-            catch
-            end
-            system(commandline);
-            barCount = barCount+1;
-            try
-                waitbar(barCount/barTotal, bar, 'Processing ADEPT Output', 'Name', 'Processing Image Data');
-            catch
-            end
-            events = processAdeptOutput(outputPath, greenFile, smoothTraces,...
-                ctBox.Value, htBox.Value, dynamicCheck.Value, fps, saveCheck.Value);
+        barCount = barCount+1;
+        try
+            waitbar(barCount/barTotal, bar, 'Motif Correlation', 'Name', 'Processing Image Data');
+        catch
         end
+        [dff1, Ca] = corrMotifs(smoothTraces, greenFile, 'spikes.mat', htBox.Value, dynamicCheck.Value, fps, saveCheck.Value, outputPath);
+        barCount = barCount+1;
+        try
+            waitbar(barCount/barTotal, bar, 'Event Segmentation', 'Name', 'Processing Image Data');
+        catch
+        end
+        events = findPeaks(dff1, Ca, greenFile, ctBox.Value, true, outputPath);
+        
     else
         events = cell(1, max(mask(:)));
     end
