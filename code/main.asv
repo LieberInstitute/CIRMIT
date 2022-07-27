@@ -313,8 +313,9 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
         close(gcf);
     end
     figure(2);
-    set(gcf, 'PaperUnits', 'Inches', 'PaperSize', [7.25, m]);
-    set(gcf, 'PaperPosition', [0 0 7.25 m]);
+    set(gcf, 'PaperUnits', 'inches');
+    x_width=7.25 ;y_width=11;
+    set(gcf, 'PaperPosition', [0 0 x_width y_width]);
     saveas(gcf, "bigtraceplot.pdf");
     close(gcf);
     m = min([m 4]);
