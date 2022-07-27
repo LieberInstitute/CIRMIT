@@ -302,20 +302,31 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
     catch
     end
     [~,m]=size(smoothTraces);
+    ymin = -0.1;
+    ymax = 1.2*max(smoothTraces(:));
     for i = 1:m
         figure(1);
         plot(smoothTraces(:,i));
+        hold on
+        for ev = 1:length(events{i})
+            plot([(events{i}(ev)-1)/10 (events{i}(ev)-1)/10], [ymin ymax], '-r', 'LineWidth', 2);
+        end
+        hold off
+        ylim([ymin ymax]);
         figure(2);
         subplot(m, 1, i);
         plot(smoothTraces(:,i));
+        for ev = 1:length(events{i})
+            plot([(events{i}(ev)-1)/10 (events{i}(ev)-1)/10], [ymin ymax], '-r', 'LineWidth', 2);
+        end
+        ylim([ymin ymax]);
         figure(1);
         saveas(gcf, strcat("traceplot", num2str(i), ".pdf"));
         close(gcf);
     end
     figure(2);
-    set(gcf, 'PaperUnits', 'inches');
-    x_width=7.25 ;y_width=11;
-    set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+    set(gcf, 'PaperUnits', 'Inches', 'PaperSize', [7.25, m]);
+    set(gcf, 'PaperPosition', [0 0 7.25 m]);
     saveas(gcf, "bigtraceplot.pdf");
     close(gcf);
     m = min([m 4]);
