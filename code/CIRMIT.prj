@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1250295844" file="C:\Users\Joe\CIRMIT\code\CIRMIT.prj" location="C:\Users\Joe\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\media\joecat\storage\GitRepos\CIRMIT\code\C:\Users\Joe\Documents\CIRMIT\CIRMIT\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3207670796" file="C:\Users\Joe\CIRMIT\code\CIRMIT.prj" location="C:\Users\Joe\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\Users\Joe\CIRMIT\code\CIRMIT\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>CIRMIT</param.appname>
     <param.icon />
     <param.icons />
@@ -24,8 +24,8 @@
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
     <param.support.packages />
-    <param.web.mcr>false</param.web.mcr>
-    <param.package.mcr>true</param.package.mcr>
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
     <param.no.mcr>false</param.no.mcr>
     <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
@@ -59,6 +59,8 @@
       <param.user.defined.mcr.options />
       <param.target.type />
       <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
       <param.no.mcr />
       <param.web.mcr.name />
       <param.package.mcr.name />
@@ -91,7 +93,6 @@
     <fileset.depfun>
       <file>${PROJECT_ROOT}\cellLabels.m</file>
       <file>${PROJECT_ROOT}\circlemask.m</file>
-      <file>${PROJECT_ROOT}\processAdeptOutput.m</file>
     </fileset.depfun>
     <build-deliverables>
       <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\readme.txt</file>
