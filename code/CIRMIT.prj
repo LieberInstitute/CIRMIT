@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3207670796" file="C:\Users\Joe\CIRMIT\code\CIRMIT.prj" location="C:\Users\Joe\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\Users\Joe\CIRMIT\code\CIRMIT\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3207670796" file="/home/joecat/CIRMIT/code/CIRMIT.prj" location="/home/joecat/CIRMIT/code" name="CIRMIT" preferred-package-location="/home/joecat/CIRMIT/code/CIRMIT/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>CIRMIT</param.appname>
     <param.icon />
     <param.icons />
@@ -9,28 +9,41 @@
     <param.company>LIBD</param.company>
     <param.summary>Calcium Imaging Real-Time MATLAB Interactive Toolbox</param.summary>
     <param.description>Processes calcium imaging data and produces a visualization tool.</param.description>
-    <param.screenshot>${PROJECT_ROOT}\cirmit_splash.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}/cirmit_splash.png</param.screenshot>
     <param.guid />
-    <param.installpath.string>\LIBD\CIRMIT\</param.installpath.string>
-    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.installpath.string>/LIBD/CIRMIT/</param.installpath.string>
+    <param.installpath.combo>option.installpath.user</param.installpath.combo>
     <param.logo />
     <param.install.notes />
-    <param.target.install.notes />
-    <param.intermediate>${PROJECT_ROOT}\CIRMIT\for_testing</param.intermediate>
-    <param.files.only>${PROJECT_ROOT}\CIRMIT\for_redistribution_files_only</param.files.only>
-    <param.output>${PROJECT_ROOT}\CIRMIT\for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}\CIRMIT</param.logdir>
+    <param.target.install.notes>In the following directions, replace MR/R2023a by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
+
+(1) Set the environment variable XAPPLRESDIR to this value:
+
+MR/R2023a/X11/app-defaults
+
+
+(2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the following:
+
+MR/R2023a/runtime/glnxa64:MR/R2023a/bin/glnxa64:MR/R2023a/sys/os/glnxa64:MR/R2023a/sys/opengl/lib/glnxa64
+
+If it is defined, set it to the following:
+
+${LD_LIBRARY_PATH}:MR/R2023a/runtime/glnxa64:MR/R2023a/bin/glnxa64:MR/R2023a/sys/os/glnxa64:MR/R2023a/sys/opengl/lib/glnxa64</param.target.install.notes>
+    <param.intermediate>${PROJECT_ROOT}/CIRMIT/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/CIRMIT/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/CIRMIT/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/CIRMIT</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
     <param.support.packages />
-    <param.web.mcr>true</param.web.mcr>
-    <param.package.mcr>false</param.package.mcr>
+    <param.web.mcr>false</param.web.mcr>
+    <param.package.mcr>true</param.package.mcr>
     <param.no.mcr>false</param.no.mcr>
     <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
-    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
     <param.create.log>false</param.create.log>
     <param.log.file />
     <param.native.matlab>false</param.native.matlab>
@@ -50,7 +63,6 @@
       <param.installpath.combo />
       <param.logo />
       <param.install.notes />
-      <param.target.install.notes />
       <param.intermediate />
       <param.files.only />
       <param.output />
@@ -59,8 +71,6 @@
       <param.user.defined.mcr.options />
       <param.target.type />
       <param.support.packages />
-      <param.web.mcr />
-      <param.package.mcr />
       <param.no.mcr />
       <param.web.mcr.name />
       <param.package.mcr.name />
@@ -73,35 +83,35 @@
       <param.example />
     </unset>
     <fileset.main>
-      <file>${PROJECT_ROOT}\main.m</file>
+      <file>${PROJECT_ROOT}/main.m</file>
     </fileset.main>
     <fileset.resources>
-      <file>${PROJECT_ROOT}\corrMotifs.m</file>
-      <file>${PROJECT_ROOT}\dff.m</file>
-      <file>${PROJECT_ROOT}\findPeaks.m</file>
-      <file>${PROJECT_ROOT}\main.m</file>
-      <file>${PROJECT_ROOT}\makeAnimation.m</file>
-      <file>${PROJECT_ROOT}\processGreen.m</file>
-      <file>${PROJECT_ROOT}\processRed.m</file>
-      <file>${PROJECT_ROOT}\registerGreen.m</file>
-      <file>${PROJECT_ROOT}\segmentRed.m</file>
-      <file>${PROJECT_ROOT}\toolbox</file>
-      <file>${PROJECT_ROOT}\traceExtraction.m</file>
-      <file>G:\GitRepos\CIRMIT\R</file>
+      <file>${PROJECT_ROOT}/corrMotifs.m</file>
+      <file>${PROJECT_ROOT}/dff.m</file>
+      <file>${PROJECT_ROOT}/findPeaks.m</file>
+      <file>${PROJECT_ROOT}/main.m</file>
+      <file>${PROJECT_ROOT}/makeAnimation.m</file>
+      <file>${PROJECT_ROOT}/processGreen.m</file>
+      <file>${PROJECT_ROOT}/processRed.m</file>
+      <file>${PROJECT_ROOT}/registerGreen.m</file>
+      <file>${PROJECT_ROOT}/segmentRed.m</file>
+      <file>${PROJECT_ROOT}/toolbox</file>
+      <file>${PROJECT_ROOT}/traceExtraction.m</file>
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
-      <file>${PROJECT_ROOT}\cellLabels.m</file>
-      <file>${PROJECT_ROOT}\circlemask.m</file>
+      <file>${PROJECT_ROOT}/cellLabels.m</file>
+      <file>${PROJECT_ROOT}/circlemask.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="CIRMIT.exe" optional="false">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\CIRMIT.exe</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="splash.png" optional="false">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}/CIRMIT/for_testing" name="splash.png" optional="false">/home/joecat/CIRMIT/code/CIRMIT/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/CIRMIT/for_testing" name="readme.txt" optional="true">/home/joecat/CIRMIT/code/CIRMIT/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/CIRMIT/for_testing" name="run_CIRMIT.sh" optional="false">/home/joecat/CIRMIT/code/CIRMIT/for_testing/run_CIRMIT.sh</file>
+      <file location="${PROJECT_ROOT}/CIRMIT/for_testing" name="CIRMIT" optional="false">/home/joecat/CIRMIT/code/CIRMIT/for_testing/CIRMIT</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2023a</root>
+      <root>/usr/local/MATLAB/R2023a</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
       </toolboxes>
@@ -112,18 +122,18 @@
       </toolbox>
     </matlab>
     <platform>
-      <unix>false</unix>
+      <unix>true</unix>
       <mac>false</mac>
-      <windows>true</windows>
+      <windows>false</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
-      <linux>false</linux>
+      <linux>true</linux>
       <solaris>false</solaris>
-      <osver>10.0</osver>
+      <osver>5.15.0-71-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>win64</arch>
+      <arch>glnxa64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>

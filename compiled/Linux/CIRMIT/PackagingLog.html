@@ -1,0 +1,23 @@
+<html><meta charset="UTF-8"><pre>
+<font color=blue>Preparing Runtime...</font>
+Downloading MATLAB Runtime installer from "https://ssd.mathworks.com/supportfiles/downloads/R2023a/Release/1/deployment_files/installer/complete/glnxa64/MATLAB_Runtime_R2023a_Update_1_glnxa64.zip".
+Downloaded MATLAB Runtime installer from "/home/joecat/MCRInstaller9.14/MATLAB_Runtime_R2023a_Update_1_glnxa64.zip".
+<font color=blue>mcc -o CIRMIT -W main:CIRMIT -T link:exe -d /home/joecat/CIRMIT/code/CIRMIT/for_testing -v /home/joecat/CIRMIT/code/main.m -a /home/joecat/CIRMIT/code/corrMotifs.m -a /home/joecat/CIRMIT/code/dff.m -a /home/joecat/CIRMIT/code/findPeaks.m -a /home/joecat/CIRMIT/code/main.m -a /home/joecat/CIRMIT/code/makeAnimation.m -a /home/joecat/CIRMIT/code/processGreen.m -a /home/joecat/CIRMIT/code/processRed.m -a /home/joecat/CIRMIT/code/registerGreen.m -a /home/joecat/CIRMIT/code/segmentRed.m -a /home/joecat/CIRMIT/code/toolbox -a /home/joecat/CIRMIT/code/traceExtraction.m </font>
+Compiler version: 8.6 (R2023a)
+
+Analyzing file dependencies. 
+
+Warning: In "/home/joecat/CIRMIT/code/toolbox/TIFFStack-master/TIFFStack.m", "mex" are excluded from packaging for the MATLAB Runtime environment according to the MATLAB Compiler license. Either remove the file or function from your code, or use the MATLAB function "isdeployed" to ensure the function is not invoked in the deployed component.
+Warning: Excluded "/usr/local/MATLAB/R2023a/toolbox/matlab/helptools/help.m"; reason: The file or function is non-deployable and has been excluded from packaging. Either remove the file or function from your code, or use the MATLAB function "isdeployed" to ensure the function is not invoked in the deployed component. Then you can suppress this warning by using the %#exclude pragma.
+Parsing file "/home/joecat/CIRMIT/code/main.m"
+	(referenced from command line).
+Generating file "/home/joecat/CIRMIT/code/CIRMIT/for_testing/readme.txt".
+Generating file "/home/joecat/CIRMIT/code/CIRMIT/for_testing/run_CIRMIT.sh".
+
+<font color=blue>Packaging...</font>
+Creating the bundle...
+deleting /home/joecat/CIRMIT/code/CIRMIT/for_redistribution/__MW_INTERNAL_PAYLOAD_bundle.zip
+Self contained installer created at /home/joecat/CIRMIT/code/CIRMIT/for_redistribution/MyAppInstaller_mcr.install.
+Packaging complete.
+Elapsed packaging time was: 12 minutes and 15 seconds.
+</pre></html>
