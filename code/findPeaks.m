@@ -1,10 +1,12 @@
 function events = findPeaks(dff1, Ca, greenFile, thr, savePeaks, outputPath)
 
+    [~, name, ~] = fileparts(greenFile);
 
     [m,T] = size(dff1);
 
     events = {};
-
+    fid = fopen(fullfile(outputPath, strcat(name, "_events.csv")), "w");
+    fprintf(fid, '%s,%s\n', "ROI", "event_second");
 
     for ii = 1:m
         tmp = find(max(Ca{ii})>thr);
@@ -16,9 +18,14 @@ function events = findPeaks(dff1, Ca, greenFile, thr, savePeaks, outputPath)
         end
 
         events{ii} = spks;
+
+        for spk = spks
+            fprintf(fid, '%d,%d\n', ii, spk/10);
+        end
     end
 
-    [~, name, ~] = fileparts(greenFile);
+    fclose(fid);
+
     %{
     try
       fig=figure;
