@@ -204,7 +204,7 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
             saveCheck.Value, saveCheck.Value, outputPath, true);
         tiffFile = fullfile(outputPath, 'TIFF' , [name '.tiff']);
     else
-        series1 = TIFFStack(fullfile(greenPath, greenFile));
+        series1 = tiffreadVolume(fullfile(greenPath, greenFile));
         series1 = uint16(series1);
         [y, x, t] = size(series1);
         mdFig = uifigure('Name', 'CIRMIT', 'position', [360 198 325 300]);
@@ -324,13 +324,13 @@ function startProcess(~, ~, fig, threshMethod, sdThresh, refineMethod, registerC
         hold off
         ylim([ymin ymax]);
         figure(1);
-        saveas(gcf, strcat("traceplot", num2str(i), ".pdf"));
+        saveas(gcf, fullfile(outputPath, strcat(name, "_traceplot", num2str(i), ".pdf")));
         close(gcf);
     end
     figure(2);
     set(gcf, 'PaperUnits', 'Inches', 'PaperSize', [7.25, m]);
     set(gcf, 'PaperPosition', [0 0 7.25 m]);
-    saveas(gcf, "bigtraceplot.pdf");
+    saveas(gcf, fullfile(outputPath, strcat(name, "_bigtraceplot.pdf")));
     close(gcf);
     m = min([m 4]);
     delete(gcp('nocreate'));
