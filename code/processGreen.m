@@ -23,8 +23,13 @@ function [series, x, y, t, MetaData] = processGreen(greenFile, saveMetaData, sav
     
     data = bfopen(greenFile);
     omeMeta = data{1, 4};
-    fps = 1/double(omeMeta.getPixelsTimeIncrement(0).value());
-    MetaData.FPS = fps;
+    try
+        fps = 1/double(omeMeta.getPixelsTimeIncrement(0).value());
+        MetaData.FPS = fps;
+    catch
+        
+        MetaData.FPS = 4;
+    end
     if saveMetaData
         if ~exist(fullfile(outputPath, 'MetaData'), 'dir')
             mkdir(fullfile(outputPath, 'MetaData'));

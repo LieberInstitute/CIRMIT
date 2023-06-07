@@ -4,7 +4,7 @@ function [dff1, Ca] = corrMotifs(smoothTraces, greenFile, spikesFile, height, dy
     dff = smoothTraces';
 
     [m,T]=size(dff);
-    load(spikesFile);
+    load(spikesFile, 'spikes');
     dff1 = [];
     SD = [];
     Ca = {};

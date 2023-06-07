@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1250295844" file="G:\GitRepos\CIRMIT\code\CIRMIT.prj" location="G:\GitRepos\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\media\joecat\storage\GitRepos\CIRMIT\code\C:\Users\Joe\Documents\CIRMIT\CIRMIT\for_redistribution" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="1784789321" file="C:\Users\Joe\CIRMIT\code\CIRMIT.prj" location="C:\Users\Joe\CIRMIT\code" name="CIRMIT" preferred-package-location="C:\Users\Joe\CIRMIT\code\CIRMIT\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>CIRMIT</param.appname>
     <param.icon />
     <param.icons />
@@ -36,7 +36,12 @@
     <param.native.matlab>false</param.native.matlab>
     <param.checkbox>false</param.checkbox>
     <param.example />
-    <param.help.text />
+    <param.help.text>Syntax 
+	  -? 
+	 
+ Input Arguments 
+	 -?  print help on how to use the application 
+	 input arguments</param.help.text>
     <unset>
       <param.icon />
       <param.icons />
@@ -66,7 +71,6 @@
       <param.native.matlab />
       <param.checkbox />
       <param.example />
-      <param.help.text />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\main.m</file>
@@ -83,41 +87,27 @@
       <file>${PROJECT_ROOT}\segmentRed.m</file>
       <file>${PROJECT_ROOT}\toolbox</file>
       <file>${PROJECT_ROOT}\traceExtraction.m</file>
-      <file>G:\GitRepos\CIRMIT\R</file>
     </fileset.resources>
     <fileset.package />
     <fileset.depfun>
       <file>${PROJECT_ROOT}\cellLabels.m</file>
       <file>${PROJECT_ROOT}\circlemask.m</file>
-      <file>${PROJECT_ROOT}\processAdeptOutput.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="CIRMIT.exe" optional="false">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\CIRMIT.exe</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="splash.png" optional="false">G:\GitRepos\CIRMIT\code\CIRMIT\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="readme.txt" optional="true">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="CIRMIT.exe" optional="false">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\CIRMIT.exe</file>
+      <file location="${PROJECT_ROOT}\CIRMIT\for_testing" name="splash.png" optional="false">C:\Users\Joe\CIRMIT\code\CIRMIT\for_testing\splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2018b</root>
+      <root>C:\Program Files\MATLAB\R2023a</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
-        <toolbox name="gpucoder" />
-        <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
         <matlabcoder>
           <enabled>true</enabled>
         </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <gpucoder>
-          <enabled>true</enabled>
-        </gpucoder>
-      </toolbox>
-      <toolbox>
-        <neuralnetwork>
-          <enabled>true</enabled>
-        </neuralnetwork>
       </toolbox>
     </matlab>
     <platform>
